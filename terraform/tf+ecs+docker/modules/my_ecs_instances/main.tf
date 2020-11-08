@@ -1,5 +1,6 @@
 # Naming convention: environment, cluster name and the instance_group name.
-# That is also the reason why ecs_instances is a separate module and not everything is created here.
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
 
 resource "aws_security_group" "instance" {
   name        = "${var.environment}_${var.cluster}_${var.instance_group}"
@@ -13,8 +14,7 @@ resource "aws_security_group" "instance" {
   }
 }
 
-# We separate the rules from the aws_security_group because then we can manipulate the
-# aws_security_group outside of this module
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
 
 resource "aws_security_group_rule" "outbound_internet_access" {
   type              = "egress"
@@ -25,7 +25,7 @@ resource "aws_security_group_rule" "outbound_internet_access" {
   security_group_id = aws_security_group.instance.id
 }
 
-# Default disk size for Docker is 22 gig, see http://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_configuration
 
 resource "aws_launch_configuration" "launch" {
   name_prefix          = "${var.environment}_${var.cluster}_${var.instance_group}_"
@@ -36,16 +36,12 @@ resource "aws_launch_configuration" "launch" {
   iam_instance_profile = var.iam_instance_profile_id
   key_name             = var.key_name
 
-  # aws_launch_configuration can not be modified.
-  # Therefore we use create_before_destroy so that a new modified aws_launch_configuration can be created
-  # before the old one get's destroyed. That's why we use name_prefix instead of name.
-
   lifecycle {
     create_before_destroy = true
   }
 }
 
-# Instances are scaled across availability zones http://docs.aws.amazon.com/autoscaling/latest/userguide/auto-scaling-benefits.html
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group
 
 resource "aws_autoscaling_group" "asg" {
   name                 = "${var.environment}_${var.cluster}_${var.instance_group}"
@@ -82,7 +78,6 @@ resource "aws_autoscaling_group" "asg" {
   }
 
   # EC2 instances require internet connectivity to boot. Thus EC2 instances must not start before NAT is available.
-  # For info why see description in the network module.
   tag {
     key                 = "DependsId"
     value               = var.depends_id

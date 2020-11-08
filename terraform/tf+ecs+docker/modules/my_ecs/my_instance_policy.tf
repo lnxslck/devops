@@ -20,11 +20,15 @@ resource "aws_iam_role" "ecs_instance_role" {
 EOF
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile
+
 resource "aws_iam_instance_profile" "ecs" {
   name = "${var.environment}_ecs_instance_profile"
   path = "/"
   role = aws_iam_role.ecs_instance_role.name
 }
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 
 resource "aws_iam_role_policy_attachment" "ecs_ec2_role" {
   role       = aws_iam_role.ecs_instance_role.id

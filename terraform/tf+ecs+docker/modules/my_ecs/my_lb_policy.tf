@@ -1,3 +1,5 @@
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
+
 resource "aws_iam_role" "ecs_lb_role" {
   name = "${var.environment}_ecs_lb_role"
   path = "/my_ecs/"
@@ -18,6 +20,8 @@ resource "aws_iam_role" "ecs_lb_role" {
 }
 EOF
 }
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 
 resource "aws_iam_role_policy_attachment" "ecs_lb" {
   role       = aws_iam_role.ecs_lb_role.id

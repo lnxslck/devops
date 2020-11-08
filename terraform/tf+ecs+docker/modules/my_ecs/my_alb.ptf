@@ -7,6 +7,8 @@ module "alb" {
   public_subnet_ids = module.network.public_subnet_ids
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule
+
 resource "aws_security_group_rule" "alb_to_ecs" {
   type                     = "ingress"
   from_port                = 32768

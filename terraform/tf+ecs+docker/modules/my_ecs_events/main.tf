@@ -34,7 +34,7 @@ EOF
   }
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_rule
 
 resource "aws_cloudwatch_event_rule" "ecs_task_stopped" {
   name          = "${var.environment}_${var.cluster}_task_stopped"
@@ -42,7 +42,7 @@ resource "aws_cloudwatch_event_rule" "ecs_task_stopped" {
   event_pattern = data.template_file.ecs_task_stopped.rendered
 }
 
-# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_event_target
 
 resource "aws_cloudwatch_event_target" "event_fired" {
   rule  = aws_cloudwatch_event_rule.ecs_task_stopped.name
