@@ -1,0 +1,25 @@
+---
+- hosts: all
+  tasks:
+  - name: Install prerequisites
+    apt:
+      name: ['apt-transport-https','software-properties-common','openjdk-8-jdk']
+      state: present
+      update_cache: yes
+    become: yes
+
+  - name: Add Jenkins GPG key
+    apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key
+    become: yes
+
+  - name: Add Jenkins APT repository
+    apt_repository:
+      repo: deb https://pkg.jenkins.io/debian-stable binary/
+    become: yes
+
+  - name: Install Jenkins
+    apt:
+      name: ['jenkins']
+      state: present
+      update_cache: yes
+    become: yes
