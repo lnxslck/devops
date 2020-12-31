@@ -1,0 +1,13 @@
+---
+# tasks file for common
+
+- name: install python bindings for SELinux
+  yum: name={{item}} state=present
+  with_items:
+    - libeselinux-python
+    - libsemanange-python
+
+- name: test to see if SELinux is running
+  command: getenforce
+  register: sestatus   # registeres the return of the task into a new variable
+  changed_when: false  # to force to return OK
