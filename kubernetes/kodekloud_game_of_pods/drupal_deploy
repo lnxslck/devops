@@ -1,0 +1,10 @@
+# Create a Drupal frontend with a Drupal db
+
+# On the master
+docker container run --name drupal_db -d -v drupal_data:/var/lib/postgresql/data -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DATABASE=postgres postgres:latest
+
+# Run the DB container
+docker container run --name drupal -d -v drupal_modules:/var/www/html/modules -v drupal_profiles:/var/www/html/profiles -v drupal_themes:/var/www/html/themes -v drupal_sites:/var/www/html/sites -p 80:80 --link drupal_db:drupal-postgres drupal:latest
+
+select postgresql as database
+and change localhost by drupal-postgres
