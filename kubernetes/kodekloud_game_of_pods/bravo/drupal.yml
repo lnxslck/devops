@@ -1,29 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: drupal
+  name: drupal-mysql
   labels:
-    app: drupal
+    app: drupal-mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: drupal
+      app: drupal-mysql
   template:
     metadata:
       labels:
-        app: drupal
+        app: drupal-mysql
     spec:
       containers:
-      - name: drupal
-        image: drupal:8.6
-        ports:
-        - containerPort: 80
-      initContainers:
-        - name: init-sites-volume
-          image: drupal:8.6
-          command: [ "/bin/bash", "-c" ]
-          args: [ 'cp -r /var/www/html/sites/ /data/; chown www-data:www-data /data/ -R' ] 
-          volumeMounts:
-          - mountPath: /data
-            name: 
+      - name: drupal-mysql
+        image: mysql:5.7 
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: drupal-mysql-pvc
+      volumes:
+        - name: drupal-mysql-pvc

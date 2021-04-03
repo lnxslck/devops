@@ -35,7 +35,7 @@ In this challenge you will work with the following:
     Create Persistent Volumes and Persistent Volume Claims
 
 
-### Drupal CMS
+### Drupal CMS Specifications
 
 
 users
