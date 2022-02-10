@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
 
       - name: Maven Package
-        run: mvn -B clean package -DskipTests
+        run: cd cicd/github_actions/maven_helm_k8s ; mvn -B clean package -DskipTests
 
       - name: Maven Verify
-        run: mvn -B clean verify
+        run: cd cicd/github_actions/maven_helm_k8s ; mvn -B clean verify
