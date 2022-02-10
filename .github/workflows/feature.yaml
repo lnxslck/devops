@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Set up JDK 13
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
-          java-version: 13
+          java-version: '13'
 
       - name: Maven Package
         run: cd cicd/github_actions/maven_helm_k8s ; mvn -B clean package -DskipTests
