@@ -1,5 +1,7 @@
 **/guessing_game/target/*
 
+**/variables/target/*
+
 # Local .terraform directories
 **/.terraform/*
 
