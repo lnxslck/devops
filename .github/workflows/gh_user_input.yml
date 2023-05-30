@@ -29,14 +29,14 @@ jobs:
 
   job3:
     runs-on: ubuntu-latest
-    needs: [job2]
+    #needs: [job2]
     steps:
       - name: print working directory
         run: pwd
 
   job4:
     runs-on: ubuntu-latest
-    needs: [job3]
+    #needs: [job3]
     steps:
       - name: list files
         run: ls -la
