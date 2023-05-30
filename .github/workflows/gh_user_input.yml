@@ -4,17 +4,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  failing_job:
+  job_1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: uptime
+        run: uptime
+        
+
+  job_fails:
     runs-on: ubuntu-latest
     steps:
       - name: Failing step
-        run: nonexistent_command
+        run: uptime
+        
 
-  wait_for_input:
+  job2:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          read -p "Enter a value: " value
-          echo "Value entered: $value"
-        env:
-          value: ${{ github.event.inputs.value }}
+      - name: print working directory
+        run: pwd
