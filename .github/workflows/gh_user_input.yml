@@ -17,8 +17,14 @@ jobs:
       - name: Failing step
         run: somecommand
 
-      - name: cancelling
+      - name: Step To run on failure
+        if: ${{ failure() }}
         uses: andymckay/cancel-action@0.3
+        #run: |
+         # curl --request POST \
+
+      #- name: cancelling
+       # uses: andymckay/cancel-action@0.3
 
 
   job3:
