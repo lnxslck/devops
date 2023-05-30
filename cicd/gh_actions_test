@@ -1,0 +1,14 @@
+name: My Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  wait_for_input:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          read -p "Enter a value: " value
+          echo "Value entered: $value"
+        env:
+          value: ${{ github.event.inputs.value }}
