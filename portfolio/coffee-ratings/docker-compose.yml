@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: coffee-db
+    environment:
+      POSTGRES_USER: coffeeuser
+      POSTGRES_PASSWORD: coffeepass
+      POSTGRES_DB: coffeeratings
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: coffee-app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://coffeeuser:coffeepass@db:5432/coffeeratings
+
+volumes:
+  pgdata:
